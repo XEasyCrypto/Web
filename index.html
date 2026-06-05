@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>XEasyCrypto Pro | Full Vibrant UI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;500;800&display=swap');
+        
+        :root {
+            --bg-base: #060608;
+            --aura-1: #1e40af; 
+            --aura-2: #6b21a8;
+            --aura-3: #1e3a8a;
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --tab-active: rgba(255, 255, 255, 0.12);
+            --switcher-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        .light-mode {
+            --bg-base: #f0f9ff;
+            --aura-1: #22c55e; 
+            --aura-2: #eab308; 
+            --aura-3: #06b6d4; 
+            --card-bg: rgba(255, 255, 255, 0.65);
+            --card-border: rgba(255, 255, 255, 0.8);
+            --text-main: #0f172a;
+            --tab-active: rgba(255, 255, 255, 0.95);
+            --switcher-bg: rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: 'Vazirmatn', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease;
+        }
+
+        .aura-layer {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .aura {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.6; 
+            animation: moveAura 12s infinite alternate ease-in-out;
+            transition: background 0.8s ease;
+        }
+
+        .aura-1 { width: 400px; height: 400px; background: var(--aura-1); top: -5%; left: -5%; }
+        .aura-2 { width: 500px; height: 500px; background: var(--aura-2); bottom: -5%; right: -5%; animation-delay: -4s; }
+        .aura-3 { width: 300px; height: 300px; background: var(--aura-3); top: 35%; left: 25%; opacity: 0.4; }
+
+        @keyframes moveAura {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(80px, 50px) scale(1.2); }
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            margin: -20px -20px 20px -20px;
+            padding: 24px 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 0 0 30px 30px;
+        }
+
+        .price-card, .skeleton-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 28px;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.02);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .price-card {
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .price-card:hover {
+            border-color: #0088cc;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 136, 204, 0.15);
+        }
+
+        .price-card:active {
+            transform: scale(0.97) !important;
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-card {
+            animation: fadeInUp 0.5s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        /* استایل‌های متحرک اسکلتون لودینگ */
+        .skeleton-pulse {
+            background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+            background-size: 200% 100%;
+            animation: loadingPulse 1.5s infinite linear;
+        }
+        .light-mode .skeleton-pulse {
+            background: linear-gradient(90deg, rgba(0,0,0,0.03) 25%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.03) 75%);
+            background-size: 200% 100%;
+        }
+
+        @keyframes loadingPulse {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .nav-dock {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            background: var(--card-bg);
+            backdrop-filter: blur(35px) saturate(200%);
+            -webkit-backdrop-filter: blur(35px) saturate(200%);
+            border-radius: 35px;
+            padding: 12px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .switch-btn {
+            flex: 1; padding: 10px; border-radius: 22px; font-size: 12px;
+            text-align: center; color: var(--text-main); opacity: 0.5;
+            transition: 0.3s; cursor: pointer;
+        }
+
+        .switch-btn.active {
+            background: #0088cc; color: #ffffff; opacity: 1; font-weight: 800;
+        }
+
+        .tab-item {
+            flex: 1; padding: 12px; text-align: center; font-size: 13px;
+            color: var(--text-main); opacity: 0.5; border-radius: 22px;
+            transition: 0.3s; cursor: pointer;
+        }
+
+        .tab-item.active {
+            background: var(--tab-active); opacity: 1; font-weight: bold;
+            border: 1px solid var(--card-border);
+        }
+    </style>
+</head>
+<body class="light-mode">
+
+    <div class="aura-layer">
+        <div class="aura aura-1"></div>
+        <div class="aura aura-2"></div>
+        <div class="aura aura-3"></div>
+    </div>
+
+    <div class="app-container">
+        <header id="main-header">
+            <div class="flex justify-between items-center px-2">
+                <div>
+                    <div id="live-time" class="text-3xl font-black tracking-tighter">00:00</div>
+                    <div id="live-date" class="text-[11px] opacity-50 font-medium mt-1 uppercase">--</div>
+                </div>
+                
+                <div class="flex items-center gap-2">
+                    <a href="https://t.me/XEasyCrypto_Bot" target="_blank" class="flex items-center gap-2 bg-[#0088cc] hover:bg-[#0077b3] text-white px-4 py-2 rounded-2xl shadow-lg transition-all active:scale-95 text-[13px] font-bold">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22 2L2 8.5L9.5 12.5M22 2L15.5 22L9.5 12.5M22 2L9.5 12.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        ربات تلگرام
+                    </a>
+                    <button onclick="toggleTheme()" class="w-12 h-12 rounded-full bg-[var(--card-bg)] backdrop-blur-xl flex items-center justify-center border border-[var(--card-border)] shadow-lg active:scale-90 transition-transform">
+                        <span id="theme-icon" class="text-xl">☀️</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div id="price-list" class="pb-44"></div>
+
+        <div class="nav-dock" id="bottom-nav">
+            <div id="currency-switcher" class="flex bg-[var(--switcher-bg)] rounded-[25px] p-1 mb-2 border border-[var(--card-border)] hidden" dir="ltr">
+                <div onclick="setCurrency('Dollar')" id="curr-Dollar" class="switch-btn">Dollar</div>
+                <div onclick="setCurrency('Toman')" id="curr-Toman" class="switch-btn active">Toman</div>
+            </div>
+            <div class="flex gap-1">
+                <div onclick="switchTab('fiat')" id="tab-fiat" class="tab-item active">ارزها</div>
+                <div onclick="switchTab('gold')" id="tab-gold" class="tab-item">طلا و سکه</div>
+                <div onclick="switchTab('crypto')" id="tab-crypto" class="tab-item">دیجیتال</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTab = 'fiat';
+        let currentCurrency = 'Toman';
+
+        // دیتای تستی به همراه آرایه عددی برای رسم چارت‌های کوچک خطی (Sparkline)
+        const data = {
+            fiat: [
+                { name: 'دلار آمریکا', symbol: 'USD', price: '64,250', change: '+0.4%', sparkline: [10, 15, 8, 12, 18, 14, 22], img: 'https://flagcdn.com/w160/us.png' },
+                { name: 'یورو', symbol: 'EUR', price: '69,120', change: '-0.2%', sparkline: [20, 18, 19, 15, 16, 12, 10], img: 'https://flagcdn.com/w160/eu.png' },
+                { name: 'پوند انگلیس', symbol: 'GBP', price: '82,400', change: '+0.8%', sparkline: [5, 10, 12, 8, 15, 20, 25], img: 'https://flagcdn.com/w160/gb.png' },
+                { name: 'درهم امارات', symbol: 'AED', price: '17,510', change: '0.0%', sparkline: [15, 15, 15, 15, 15, 15, 15], img: 'https://flagcdn.com/w160/ae.png' },
+                { name: 'لیر ترکیه', symbol: 'TRY', price: '1,960', change: '-1.5%', sparkline: [25, 22, 18, 19, 14, 10, 5], img: 'https://flagcdn.com/w160/tr.png' },
+                { name: 'روبل روسیه', symbol: 'RUB', price: '705', change: '+0.1%', sparkline: [12, 11, 13, 12, 14, 13, 15], img: 'https://flagcdn.com/w160/ru.png' },
+                { name: 'افغانی', symbol: 'AFN', price: '920', change: '+0.5%', sparkline: [8, 9, 7, 10, 11, 13, 14], img: 'https://flagcdn.com/w160/af.png' },
+                { name: 'دینار عراق', symbol: 'IQD', price: '49.5', change: '0.0%', sparkline: [10, 10, 10, 10, 10, 10, 10], img: 'https://flagcdn.com/w160/iq.png' },
+                { name: 'روپیه هند', symbol: 'INR', price: '775', change: '-0.3%', sparkline: [15, 16, 14, 13, 15, 12, 11], img: 'https://flagcdn.com/w160/in.png' },
+                { name: 'یوان چین', symbol: 'CNY', price: '8,850', change: '+0.2%', sparkline: [10, 12, 11, 13, 12, 14, 15], img: 'https://flagcdn.com/w160/cn.png' },
+                { name: 'دلار کانادا', symbol: 'CAD', price: '47,150', change: '+0.6%', sparkline: [14, 16, 15, 18, 17, 21, 23], img: 'https://flagcdn.com/w160/ca.png' },
+                { name: 'دلار سنگاپور', symbol: 'SGD', price: '48,100', change: '-0.1%', sparkline: [18, 19, 17, 18, 16, 15, 14], img: 'https://flagcdn.com/w160/sg.png' }
+            ],
+            gold: [
+                { name: 'طلا ۱۸ عیار', symbol: 'G18', price: '3,650,000', change: '+1.1%', sparkline: [10, 14, 12, 18, 16, 22, 26], img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpDPOEvTNoY6QglrwRZZv2Tuc0MwYE7kTg6w&s' },
+                { name: 'طلا ۲۴ عیار', symbol: 'G24', price: '4,866,000', change: '+1.1%', sparkline: [10, 14, 12, 18, 16, 22, 26], img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpDPOEvTNoY6QglrwRZZv2Tuc0MwYE7kTg6w&s' },
+                { name: 'سکه امامی', symbol: 'SEKEE', price: '43,100,000', change: '-0.5%', sparkline: [30, 28, 29, 25, 26, 22, 20], img: 'https://talashirazi.ir/wp-content/uploads/2025/11/67991e2d1bdf870b7.webp' }
+            ],
+            crypto: [
+                { name: 'Bitcoin', symbol: 'BTC', price: '64,520', toman: '4,145,000,000', change: '+1.2%', sparkline: [12, 15, 14, 18, 17, 22, 24], img: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png' },
+                { name: 'Tether', symbol: 'USDT', price: '1.00', toman: '64,250', change: '0.0%', sparkline: [15, 15, 15, 15, 15, 15, 15], img: 'https://cryptologos.cc/logos/tether-usdt-logo.png' },
+                { name: 'Toncoin', symbol: 'TON', price: '7.21', toman: '463,000', change: '+4.5%', sparkline: [5, 12, 8, 15, 22, 19, 28], img: 'https://cryptologos.cc/logos/toncoin-ton-logo.png' },
+                { name: 'TRON', symbol: 'TRX', price: '0.12', toman: '7,710', change: '+0.5%', sparkline: [10, 11, 10, 12, 11, 13, 14], img: 'https://cryptologos.cc/logos/tron-trx-logo.png' },
+                { name: 'Ethereum', symbol: 'ETH', price: '3,450', toman: '221,600,000', change: '+2.1%', sparkline: [15, 14, 18, 16, 22, 20, 25], img: 'https://cryptologos.cc/logos/ethereum-eth-logo.png' },
+                { name: 'Solana', symbol: 'SOL', price: '145.2', toman: '9,320,000', change: '-1.2%', sparkline: [25, 22, 24, 18, 19, 15, 12], img: 'https://cryptologos.cc/logos/solana-sol-logo.png' },
+                { name: 'Bitcoin Cash', symbol: 'BCH', price: '425.1', toman: '27,310,000', change: '-2.4%', sparkline: [28, 26, 20, 22, 18, 15, 10], img: 'https://cryptologos.cc/logos/bitcoin-cash-bch-logo.png' },
+                { name: 'XRP', symbol: 'XRP', price: '0.58', toman: '37,200', change: '+0.1%', sparkline: [12, 11, 13, 12, 12, 13, 14], img: 'https://cryptologos.cc/logos/xrp-xrp-logo.png' },
+                { name: 'Binance Coin', symbol: 'BNB', price: '585.4', toman: '37,610,000', change: '+0.8%', sparkline: [18, 17, 19, 22, 20, 24, 26], img: 'https://cryptologos.cc/logos/bnb-bnb-logo.png' }
+            ]
+        };
+
+        // تابع تولید کدهای اسکلتون لودینگ پیش از بارگذاری کامل داده‌ها
+        function renderSkeleton() {
+            const list = document.getElementById('price-list');
+            list.innerHTML = '';
+            
+            // تولید ۴ کارت اسکلتون به عنوان پیش‌نمایش محو
+            for (let i = 0; i < 4; i++) {
+                const skel = document.createElement('div');
+                skel.className = 'skeleton-card';
+                skel.innerHTML = `
+                    <div class="flex items-center w-1/2">
+                        <div class="w-12 h-12 rounded-full skeleton-pulse ml-4 border border-[var(--card-border)]"></div>
+                        <div class="flex-1 space-y-2">
+                            <div class="h-4 skeleton-pulse rounded w-3/4"></div>
+                            <div class="h-3 skeleton-pulse rounded w-1/2"></div>
+                        </div>
+                    </div>
+                    <div class="w-1/4 h-6 skeleton-pulse rounded"></div>
+                `;
+                list.appendChild(skel);
+            }
+        }
+
+        // ایجاد رشته متنی نقاط SVG براساس آرایه عددی
+        function generateSvgPoints(arr) {
+            const width = 70;
+            const height = 26;
+            const max = Math.max(...arr);
+            const min = Math.min(...arr);
+            const range = max - min === 0 ? 1 : max - min;
+            
+            return arr.map((val, index) => {
+                const x = (index / (arr.length - 1)) * width;
+                const y = height - ((val - min) / range) * height;
+                return `${x},${y}`;
+            }).join(' ');
+        }
+
+        function render() {
+            const list = document.getElementById('price-list');
+            list.innerHTML = '';
+            const switcher = document.getElementById('currency-switcher');
+            
+            if(currentTab === 'crypto') switcher.classList.remove('hidden');
+            else switcher.classList.add('hidden');
+
+            data[currentTab].forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'price-card animate-card';
+                card.style.animationDelay = `${index * 0.05}s`;
+                
+                const isNeg = item.change?.includes('-');
+                const isZero = item.change === '0.0%';
+                let strokeColor = '#22c55e'; // سبز
+                if (isNeg) strokeColor = '#ef4444'; // قرمز
+                if (isZero) strokeColor = '#94a3b8'; // خاکستری ملایم
+
+                let displayPrice = item.price;
+                let unit = 'تومان';
+
+                if (currentTab === 'crypto') {
+                    if (currentCurrency === 'Toman') { displayPrice = item.toman; unit = 'تومان'; }
+                    else { displayPrice = item.price; unit = 'USD'; }
+                }
+
+                // ایجاد بخش چارت کوچک براساس نقاط تولید شده
+                const points = generateSvgPoints(item.sparkline || [10,10,10]);
+                const sparklineHtml = `
+                    <div class="w-[70px] h-[26px] mx-2 hidden sm:block opacity-80">
+                        <svg width="100%" height="100%" viewBox="0 0 70 26">
+                            <polyline fill="none" stroke="${strokeColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="${points}" />
+                        </svg>
+                    </div>
+                `;
+
+                card.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-[rgba(128,128,128,0.1)] flex items-center justify-center ml-4 border border-[var(--card-border)] overflow-hidden">
+                            <img src="${item.img}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100'">
+                        </div>
+                        <div>
+                            <div class="text-[15px] font-bold tracking-tight">${item.name}</div>
+                            <div class="text-[10px] opacity-40 uppercase font-black tracking-widest">${item.symbol}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-4">
+                        ${sparklineHtml}
+                        <div class="text-left" dir="ltr">
+                            ${item.change ? `<div class="text-[11px] font-black ${isZero ? 'text-slate-400' : (isNeg ? 'text-red-500' : 'text-green-600')}">${item.change}</div>` : ''}
+                            <div class="flex items-baseline justify-end gap-1">
+                                <span class="text-[18px] font-black tracking-tight">${displayPrice}</span>
+                                <span class="text-[10px] opacity-40">${unit}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById('live-time').innerText = now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute: '2-digit', hour12: false});
+            document.getElementById('live-date').innerText = now.toLocaleDateString('fa-IR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        }
+        setInterval(updateDateTime, 1000); updateDateTime();
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            document.getElementById('theme-icon').innerText = isLight ? '☀️' : '🌙';
+            render(); 
+        }
+
+        // تابع مدیریت تب‌ها به همراه لانچ کردن افکت اسکلتون لودینگ
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + tab).classList.add('active');
+            
+            renderSkeleton();
+            setTimeout(render, 600); // شبیه‌سازی مکث لودینگ شبکه به مدت ۶۰۰ میلی ثانیه
+        }
+
+        function setCurrency(curr) {
+            currentCurrency = curr;
+            document.querySelectorAll('.switch-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById('curr-' + curr).classList.add('active');
+            render();
+        }
+
+        window.onscroll = function() {
+            const header = document.getElementById('main-header');
+            if (header) {
+                header.style.background = window.scrollY > 30 ? 'var(--card-bg)' : 'transparent';
+                header.style.backdropFilter = window.scrollY > 30 ? 'blur(25px)' : 'blur(0px)';
+                header.style.borderBottom = window.scrollY > 30 ? '1px solid var(--card-border)' : 'none';
+            }
+        };
+
+        // لود اولیه با فیدبک اسکلتون لودینگ
+        renderSkeleton();
+        setTimeout(render, 800);
+    </script>
+</body>
+</html>
