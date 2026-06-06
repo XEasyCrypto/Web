@@ -87,7 +87,7 @@
             top: 0;
             z-index: 50;
             margin: -20px -20px 20px -20px;
-            padding: 24px 20px 18px 20px;
+            padding: 24px 16px 18px 16px;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border-radius: 0 0 30px 30px;
         }
@@ -109,13 +109,12 @@
             transform: translateY(8px);
         }
 
-        /* 💎 کارت‌های شیشه‌ای با انعکاس نور (Glassmorphism Highlight) */
         .price-card, .skeleton-card {
             background: var(--card-bg);
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border-radius: 24px;
-            padding: 16px 20px;
+            padding: 14px 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -125,13 +124,13 @@
             user-select: none;
             -webkit-tap-highlight-color: transparent;
             transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            gap: 8px;
         }
 
         .price-card {
             cursor: pointer;
             opacity: 0;
             transform: translateY(15px);
-            /* لبه‌ی براق شیشه‌ای در لایه بالایی کارت */
             background-image: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, transparent 40%);
         }
         body.light-mode .price-card {
@@ -172,20 +171,21 @@
         .theme-toggle-pill {
             position: relative;
             display: flex;
-            width: 76px;
-            height: 38px;
+            width: 68px;
+            height: 34px;
             background: var(--switcher-bg);
             border: 1px solid var(--card-border);
             border-radius: 99px;
             cursor: pointer;
-            padding: 3px;
+            padding: 2px;
             transition: all 0.3s ease;
+            flex-shrink: 0;
         }
         .theme-toggle-pill .slider {
             position: absolute;
-            top: 3px; right: 3px; 
-            width: 30px;
-            height: 30px;
+            top: 2px; right: 2px; 
+            width: 28px;
+            height: 28px;
             background: #0088cc;
             border-radius: 99px;
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -193,7 +193,7 @@
             z-index: 1;
         }
         body.light-mode .theme-toggle-pill .slider {
-            transform: translateX(-36px);
+            transform: translateX(-34px);
         }
         .theme-pill-icon {
             position: relative;
@@ -205,7 +205,6 @@
             transition: color 0.3s ease;
         }
 
-        /* 🌊 لودینگ اسکلتونِ گرادینتیِ نرم و روان جدید */
         .skeleton-pulse {
             background: linear-gradient(90deg, rgba(255,255,255,0.01) 30%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.01) 70%);
             background-size: 200% 100%;
@@ -289,19 +288,19 @@
         <header id="main-header">
             <div class="header-line" id="header-line"></div>
             
-            <div class="flex justify-between items-center px-2">
-                <div>
+            <div class="flex justify-between items-center gap-2 px-1">
+                <div class="flex-1 min-w-0">
                     <div id="live-time" class="text-3xl font-[900] tracking-tighter">00:00</div>
-                    <div class="text-[11px] opacity-60 font-medium mt-1" id="date-container">
-                        <span id="live-date-fa" class="font-bold">--</span>
-                        <span class="mx-1 opacity-30">|</span>
-                        <span id="live-date-en" class="opacity-80 text-[10px] tracking-wide uppercase font-sans">--</span>
+                    <div class="text-[11px] opacity-60 font-medium mt-1 flex flex-wrap items-center gap-1" id="date-container">
+                        <span id="live-date-fa" class="font-bold whitespace-nowrap">--</span>
+                        <span class="opacity-30">|</span>
+                        <span id="live-date-en" class="opacity-80 text-[10px] tracking-wide uppercase font-sans whitespace-nowrap">--</span>
                     </div>
                 </div>
                 
-                <div class="flex items-center gap-3">
-                    <a href="https://t.me/XEasyCrypto_Bot" target="_blank" class="flex items-center gap-2 bg-[#0088cc] hover:bg-[#0077b3] text-white px-4 py-2 rounded-2xl shadow-md transition-all active:scale-95 text-[13px] font-bold">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div class="flex items-center gap-2 flex-shrink-0">
+                    <a href="https://t.me/XEasyCrypto_Bot" target="_blank" class="flex items-center gap-1.5 bg-[#0088cc] hover:bg-[#0077b3] text-white px-3 py-2 rounded-2xl shadow-md transition-all active:scale-95 text-[12px] font-bold whitespace-nowrap">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M22 2L2 8.5L9.5 12.5M22 2L15.5 22L9.5 12.5M22 2L9.5 12.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                         ربات تلگرام
@@ -310,10 +309,10 @@
                     <div class="theme-toggle-pill" onclick="toggleTheme()">
                         <div class="slider"></div>
                         <div class="theme-pill-icon text-white" id="pill-dark">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
                         </div>
                         <div class="theme-pill-icon text-slate-400" id="pill-light">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.22" x2="5.64" y2="17.76"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.22" x2="5.64" y2="17.76"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
                         </div>
                     </div>
                 </div>
@@ -369,8 +368,8 @@
                 skel.className = 'skeleton-card';
                 skel.innerHTML = `
                     <div class="flex items-center w-1/2">
-                        <div class="w-12 h-12 rounded-full skeleton-pulse ml-4 border border-[var(--card-border)]"></div>
-                        <div class="flex-1 space-y-2">
+                        <div class="w-11 h-11 rounded-full skeleton-pulse ml-3 border border-[var(--card-border)] flex-shrink-0"></div>
+                        <div class="flex-1 space-y-2 min-w-0">
                             <div class="h-4 skeleton-pulse rounded w-3/4"></div>
                             <div class="h-3 skeleton-pulse rounded w-1/2"></div>
                         </div>
@@ -382,8 +381,8 @@
         }
 
         function getSvgPaths(arr) {
-            const width = 70;
-            const height = 26;
+            const width = 60;
+            const height = 24;
             const max = Math.max(...arr);
             const min = Math.min(...arr);
             const range = max - min === 0 ? 1 : max - min;
@@ -435,32 +434,32 @@
 
                 const paths = getSvgPaths(item.sparkline || [10,10,10]);
                 const sparklineHtml = `
-                    <div class="w-[70px] h-[26px] mx-1 opacity-85">
-                        <svg width="100%" height="100%" viewBox="0 0 70 26">
+                    <div class="w-[60px] h-[24px] mx-1 opacity-80 flex-shrink-0">
+                        <svg width="100%" height="100%" viewBox="0 0 60 24">
                             <path fill="${gradId}" d="${paths.areaPath}" />
-                            <path fill="none" stroke="${strokeColor}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="${paths.linePath}" />
+                            <path fill="none" stroke="${strokeColor}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="${paths.linePath}" />
                         </svg>
                     </div>
                 `;
 
                 card.innerHTML = `
-                    <div class="flex items-center max-w-[55%]">
-                        <div class="w-11 h-11 min-w-[44px] rounded-full bg-[rgba(128,128,128,0.06)] flex items-center justify-center ml-3 border border-[var(--card-border)] overflow-hidden">
+                    <div class="flex items-center min-w-0 flex-1">
+                        <div class="w-11 h-11 min-w-[44px] rounded-full bg-[rgba(128,128,128,0.06)] flex items-center justify-center ml-2.5 border border-[var(--card-border)] overflow-hidden flex-shrink-0">
                             <img src="${item.img}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100'">
                         </div>
-                        <div class="truncate">
+                        <div class="min-w-0">
                             <div class="text-[14px] font-bold tracking-tight truncate">${item.name}</div>
                             <div class="text-[10px] opacity-40 uppercase font-black tracking-widest">${item.symbol}</div>
                         </div>
                     </div>
                     
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-1 flex-shrink-0 text-left" dir="ltr">
                         ${sparklineHtml}
-                        <div class="text-left" dir="ltr">
-                            ${item.change ? `<div class="text-[11px] font-black ${isZero ? 'text-slate-400' : (isNeg ? 'text-red-500' : 'text-green-600')}">${item.change}</div>` : ''}
+                        <div>
+                            ${item.change ? `<div class="text-[11px] font-black text-right ${isZero ? 'text-slate-400' : (isNeg ? 'text-red-500' : 'text-green-600')}">${item.change}</div>` : ''}
                             <div class="flex items-baseline justify-end gap-0.5">
-                                <span class="text-[16px] font-black tracking-tight">${displayPrice}</span>
-                                <span class="text-[9px] opacity-40 font-normal">${unit}</span>
+                                <span class="text-[15px] font-black tracking-tight">${displayPrice}</span>
+                                <span class="text-[9px] opacity-40 font-normal whitespace-nowrap">${unit}</span>
                             </div>
                         </div>
                     </div>
@@ -471,14 +470,8 @@
 
         function updateDateTime() {
             const now = new Date();
-            
-            // ساعت و دقیقه
             document.getElementById('live-time').innerText = now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute: '2-digit', hour12: false});
-            
-            // تاریخ شمسی
             document.getElementById('live-date-fa').innerText = now.toLocaleDateString('fa-IR', { weekday: 'long', day: 'numeric', month: 'long' });
-            
-            // تاریخ میلادی مینی‌مال
             document.getElementById('live-date-en').innerText = now.toLocaleDateString('en-US', { day: '2-digit', month: 'short' });
         }
         setInterval(updateDateTime, 1000); updateDateTime();
