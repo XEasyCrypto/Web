@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>XEasyCrypto Pro | Vibrant UI</title>
+    <title>XEasyCrypto Pro | Grid UI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;500;800;900&display=swap');
@@ -86,10 +86,10 @@
             position: sticky;
             top: 0;
             z-index: 50;
-            margin: -20px -20px 20px -20px;
-            padding: 24px 16px 18px 16px;
+            margin: -20px -20px 24px -20px;
+            padding: 24px 20px 20px 20px;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 0 0 30px 30px;
+            border-radius: 0 0 32px 32px;
         }
 
         .header-line {
@@ -114,37 +114,35 @@
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border-radius: 24px;
-            padding: 14px 14px;
+            padding: 14px;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: space-between;
-            margin-bottom: 12px;
             border: 1px solid var(--card-border);
             box-shadow: 0 4px 24px rgba(0,0,0,0.01);
             user-select: none;
             -webkit-tap-highlight-color: transparent;
             transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-            gap: 8px;
         }
 
         .price-card {
             cursor: pointer;
             opacity: 0;
             transform: translateY(15px);
-            background-image: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, transparent 40%);
+            background-image: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 50%);
         }
         body.light-mode .price-card {
-            background-image: linear-gradient(180deg, rgba(255,255,255,0.6) 0%, transparent 40%);
+            background-image: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, transparent 50%);
         }
 
         .price-card:hover {
             border-color: #0088cc;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 136, 204, 0.12);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 136, 204, 0.15);
         }
 
         .price-card:active {
-            transform: scale(0.98) !important;
+            transform: scale(0.97) !important;
         }
 
         @keyframes fadeInUp {
@@ -168,32 +166,33 @@
         .glow-up { animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards, glowGreenPulse 1.2s ease-out; }
         .glow-down { animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards, glowRedPulse 1.2s ease-out; }
 
+        /* استانداردسازی هدر و دکمه تغییر تم مخصوص تاچ موبایل */
         .theme-toggle-pill {
             position: relative;
             display: flex;
-            width: 68px;
-            height: 34px;
+            width: 74px;
+            height: 38px;
             background: var(--switcher-bg);
             border: 1px solid var(--card-border);
             border-radius: 99px;
             cursor: pointer;
-            padding: 2px;
+            padding: 3px;
             transition: all 0.3s ease;
             flex-shrink: 0;
         }
         .theme-toggle-pill .slider {
             position: absolute;
-            top: 2px; right: 2px; 
-            width: 28px;
-            height: 28px;
+            top: 3px; right: 3px; 
+            width: 30px;
+            height: 30px;
             background: #0088cc;
             border-radius: 99px;
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3.5);
             z-index: 1;
         }
         body.light-mode .theme-toggle-pill .slider {
-            transform: translateX(-34px);
+            transform: translateX(-36px);
         }
         .theme-pill-icon {
             position: relative;
@@ -264,15 +263,15 @@
     <svg width="0" height="0" class="absolute">
         <defs>
             <linearGradient id="grad-green" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#22c55e" stop-opacity="0.22"/>
+                <stop offset="0%" stop-color="#22c55e" stop-opacity="0.25"/>
                 <stop offset="100%" stop-color="#22c55e" stop-opacity="0.0"/>
             </linearGradient>
             <linearGradient id="grad-red" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#ef4444" stop-opacity="0.22"/>
+                <stop offset="0%" stop-color="#ef4444" stop-opacity="0.25"/>
                 <stop offset="100%" stop-color="#ef4444" stop-opacity="0.0"/>
             </linearGradient>
             <linearGradient id="grad-gray" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#94a3b8" stop-opacity="0.22"/>
+                <stop offset="0%" stop-color="#94a3b8" stop-opacity="0.25"/>
                 <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.0"/>
             </linearGradient>
         </defs>
@@ -288,7 +287,7 @@
         <header id="main-header">
             <div class="header-line" id="header-line"></div>
             
-            <div class="flex justify-between items-center gap-2 px-1">
+            <div class="flex justify-between items-center gap-3 px-0.5">
                 <div class="flex-1 min-w-0">
                     <div id="live-time" class="text-3xl font-[900] tracking-tighter">00:00</div>
                     <div class="text-[11px] opacity-60 font-medium mt-1 flex flex-wrap items-center gap-1" id="date-container">
@@ -298,10 +297,10 @@
                     </div>
                 </div>
                 
-                <div class="flex items-center gap-2 flex-shrink-0">
-                    <a href="https://t.me/XEasyCrypto_Bot" target="_blank" class="flex items-center gap-1.5 bg-[#0088cc] hover:bg-[#0077b3] text-white px-3 py-2 rounded-2xl shadow-md transition-all active:scale-95 text-[12px] font-bold whitespace-nowrap">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M22 2L2 8.5L9.5 12.5M22 2L15.5 22L9.5 12.5M22 2L9.5 12.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <div class="flex items-center gap-2.5 flex-shrink-0">
+                    <a href="https://t.me/XEasyCrypto_Bot" target="_blank" class="flex items-center gap-1.5 bg-[#0088cc] hover:bg-[#0077b3] text-white px-3.5 py-2.5 rounded-2xl shadow-md transition-all active:scale-95 text-[13px] font-bold whitespace-nowrap">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22 2L2 8.5L9.5 12.5M22 2L15.5 22L9.5 12.5M22 2L9.5 12.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                         ربات تلگرام
                     </a>
@@ -309,17 +308,17 @@
                     <div class="theme-toggle-pill" onclick="toggleTheme()">
                         <div class="slider"></div>
                         <div class="theme-pill-icon text-white" id="pill-dark">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
                         </div>
                         <div class="theme-pill-icon text-slate-400" id="pill-light">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.22" x2="5.64" y2="17.76"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.22" x2="5.64" y2="17.76"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
                         </div>
                     </div>
                 </div>
             </div>
         </header>
 
-        <div id="price-list" class="pb-44"></div>
+        <div id="price-list" class="grid grid-cols-2 gap-3 pb-44"></div>
 
         <div class="nav-dock" id="bottom-nav">
             <div id="currency-switcher" class="flex bg-[var(--switcher-bg)] rounded-[25px] p-1 mb-2 border border-[var(--card-border)] hidden" dir="ltr">
@@ -348,9 +347,11 @@
                 { name: 'روبل روسیه', symbol: 'RUB', price: '705', change: '+0.1%', sparkline: [12, 11, 13, 12, 14, 13, 15], img: 'https://flagcdn.com/w160/ru.png' }
             ],
             gold: [
-                { name: 'طلا ۱۸ عیار', symbol: 'G18', price: '3,650,000', change: '+1.1%', sparkline: [10, 14, 12, 18, 16, 22, 26], img: 'https://placehold.co/100/eab308/ffffff?text=Gold' },
-                { name: 'طلا ۲۴ عیار', symbol: 'G24', price: '4,866,000', change: '+1.1%', sparkline: [10, 14, 12, 18, 16, 22, 26], img: 'https://placehold.co/100/eab308/ffffff?text=Gold' },
-                { name: 'سکه امامی', symbol: 'SEKEE', price: '43,100,000', change: '-0.5%', sparkline: [30, 28, 29, 25, 26, 22, 20], img: 'https://placehold.co/100/eab308/ffffff?text=Coin' }
+                { name: 'طلا ۱۸ عیار', symbol: 'G18', price: '3,650,000', change: '+1.1%', sparkline: [10, 14, 12, 18, 16, 22, 26] },
+                { name: 'طلا ۲۴ عیار', symbol: 'G24', price: '4,866,000', change: '+1.1%', sparkline: [11, 13, 15, 14, 19, 21, 26] },
+                { name: 'سکه امامی', symbol: 'SEKEE', price: '43,100,000', change: '-0.5%', sparkline: [30, 28, 29, 25, 26, 22, 20] },
+                { name: 'سکه بهار آزادی', symbol: 'SEKEB', price: '38,500,000', change: '+0.2%', sparkline: [15, 18, 16, 22, 20, 24, 25] },
+                { name: 'انس جهانی طلا', symbol: 'ONS', price: '2,345', change: '-0.8%', sparkline: [40, 38, 35, 32, 28, 25, 22], isUsd: true }
             ],
             crypto: [
                 { name: 'Bitcoin', symbol: 'BTC', price: '64,520', toman: '4,145,000,000', change: '+1.2%', sparkline: [12, 15, 14, 18, 17, 22, 24], img: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png' },
@@ -365,24 +366,25 @@
             list.innerHTML = '';
             for (let i = 0; i < 4; i++) {
                 const skel = document.createElement('div');
-                skel.className = 'skeleton-card';
+                skel.className = 'skeleton-card space-y-3';
                 skel.innerHTML = `
-                    <div class="flex items-center w-1/2">
-                        <div class="w-11 h-11 rounded-full skeleton-pulse ml-3 border border-[var(--card-border)] flex-shrink-0"></div>
-                        <div class="flex-1 space-y-2 min-w-0">
-                            <div class="h-4 skeleton-pulse rounded w-3/4"></div>
-                            <div class="h-3 skeleton-pulse rounded w-1/2"></div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-9 h-9 rounded-full skeleton-pulse border border-[var(--card-border)] flex-shrink-0"></div>
+                        <div class="flex-1 space-y-1.5 min-w-0">
+                            <div class="h-3.5 skeleton-pulse rounded w-3/4"></div>
+                            <div class="h-2.5 skeleton-pulse rounded w-1/2"></div>
                         </div>
                     </div>
-                    <div class="w-1/4 h-6 skeleton-pulse rounded"></div>
+                    <div class="h-5 skeleton-pulse rounded w-5/6 mt-1"></div>
+                    <div class="h-[35px] skeleton-pulse rounded-xl w-full mt-2"></div>
                 `;
                 list.appendChild(skel);
             }
         }
 
         function getSvgPaths(arr) {
-            const width = 60;
-            const height = 24;
+            const width = 160;
+            const height = 35;
             const max = Math.max(...arr);
             const min = Math.min(...arr);
             const range = max - min === 0 ? 1 : max - min;
@@ -425,44 +427,58 @@
                 card.style.animationDelay = `${index * 0.03}s`;
 
                 let displayPrice = item.price;
-                let unit = 'تومان';
+                let unit = item.isUsd ? 'USD' : 'تومان';
 
                 if (currentTab === 'crypto') {
                     if (currentCurrency === 'Toman') { displayPrice = item.toman; unit = 'تومان'; }
                     else { displayPrice = item.price; unit = 'USD'; }
                 }
 
+                let visualElement = '';
+                if (currentTab === 'gold') {
+                    if (item.symbol === 'G18' || item.symbol === 'G24') {
+                        visualElement = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2.5" class="opacity-95"><path d="M6 3h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM8 6h8M8 10h8M8 14h8M8 18h8"/></svg>`;
+                    } else if (item.symbol === 'SEKEE') {
+                        visualElement = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2.5" class="opacity-95"><circle cx="12" cy="12" r="9"/><path d="M12 15s-1.5-1.5-1.5-3.5S12 8 12 8s1.5 1.5 1.5 3.5S12 15 12 15zm-2 0l-2 2M14 15l2 2"/></svg>`;
+                    } else {
+                        visualElement = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2.5" class="opacity-95"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="6"/><path d="M12 9v6M9 12h6M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>`;
+                    }
+                } else {
+                    visualElement = `<img src="${item.img}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100'">`;
+                }
+
                 const paths = getSvgPaths(item.sparkline || [10,10,10]);
                 const sparklineHtml = `
-                    <div class="w-[60px] h-[24px] mx-1 opacity-80 flex-shrink-0">
-                        <svg width="100%" height="100%" viewBox="0 0 60 24">
+                    <div class="w-full h-[35px] mt-2 opacity-85" dir="ltr">
+                        <svg width="100%" height="100%" viewBox="0 0 160 35" preserveAspectRatio="none">
                             <path fill="${gradId}" d="${paths.areaPath}" />
-                            <path fill="none" stroke="${strokeColor}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="${paths.linePath}" />
+                            <path fill="none" stroke="${strokeColor}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="${paths.linePath}" />
                         </svg>
                     </div>
                 `;
 
                 card.innerHTML = `
-                    <div class="flex items-center min-w-0 flex-1">
-                        <div class="w-11 h-11 min-w-[44px] rounded-full bg-[rgba(128,128,128,0.06)] flex items-center justify-center ml-2.5 border border-[var(--card-border)] overflow-hidden flex-shrink-0">
-                            <img src="${item.img}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100'">
+                    <div class="flex items-center gap-2 min-w-0 w-full mb-1">
+                        <div class="w-9 h-9 min-w-[36px] rounded-full bg-[rgba(234,179,8,0.06)] flex items-center justify-center border border-[var(--card-border)] overflow-hidden flex-shrink-0">
+                            ${visualElement}
                         </div>
-                        <div class="min-w-0">
-                            <div class="text-[14px] font-bold tracking-tight truncate">${item.name}</div>
-                            <div class="text-[10px] opacity-40 uppercase font-black tracking-widest">${item.symbol}</div>
+                        <div class="min-w-0 flex-1">
+                            <div class="text-[13px] font-bold tracking-tight truncate">${item.name}</div>
+                            <div class="text-[9px] opacity-40 uppercase font-black tracking-wider">${item.symbol}</div>
                         </div>
                     </div>
                     
-                    <div class="flex items-center gap-1 flex-shrink-0 text-left" dir="ltr">
-                        ${sparklineHtml}
-                        <div>
-                            ${item.change ? `<div class="text-[11px] font-black text-right ${isZero ? 'text-slate-400' : (isNeg ? 'text-red-500' : 'text-green-600')}">${item.change}</div>` : ''}
-                            <div class="flex items-baseline justify-end gap-0.5">
-                                <span class="text-[15px] font-black tracking-tight">${displayPrice}</span>
-                                <span class="text-[9px] opacity-40 font-normal whitespace-nowrap">${unit}</span>
-                            </div>
+                    <div class="flex flex-col items-start justify-center mt-auto pt-2 w-full" dir="ltr">
+                        <div class="flex items-baseline justify-end gap-0.5 w-full">
+                            <span class="text-[16px] font-[900] tracking-tight">${displayPrice}</span>
+                            <span class="text-[9px] opacity-40 font-normal whitespace-nowrap">${unit}</span>
+                        </div>
+                        <div class="text-[10px] font-black text-right w-full mt-0.5 ${isZero ? 'text-slate-400' : (isNeg ? 'text-red-500' : 'text-green-600')}">
+                            ${item.change}
                         </div>
                     </div>
+                    
+                    ${sparklineHtml}
                 `;
                 list.appendChild(card);
             });
