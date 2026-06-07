@@ -20,6 +20,8 @@
             --switcher-bg: rgba(255, 255, 255, 0.05);
             --glow-green: rgba(34, 197, 94, 0.2);
             --glow-red: rgba(239, 68, 68, 0.2);
+            --gold-icon: #eab308;
+            --border-glow: rgba(255, 255, 255, 0.15);
         }
 
         body.light-mode {
@@ -27,13 +29,15 @@
             --aura-1: #bae6fd; 
             --aura-2: #f0e6ff; 
             --aura-3: #ffdce5; 
-            --card-bg: rgba(255, 255, 255, 0.75);
-            --card-border: rgba(255, 255, 255, 0.6);
+            --card-bg: rgba(255, 255, 255, 0.80);
+            --card-border: rgba(15, 23, 42, 0.06);
             --text-main: #0f172a;
             --tab-active: rgba(0, 0, 0, 0.06);
             --switcher-bg: rgba(0, 0, 0, 0.04);
             --glow-green: rgba(34, 197, 94, 0.12);
             --glow-red: rgba(239, 68, 68, 0.12);
+            --gold-icon: #ca8a04;
+            --border-glow: rgba(15, 23, 42, 0.12);
         }
 
         body {
@@ -123,6 +127,22 @@
             user-select: none;
             -webkit-tap-highlight-color: transparent;
             transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* لبه‌های شیشه‌ای داینامیک (Glassmorphic Border) */
+        .price-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 1px;
+            background: linear-gradient(135deg, var(--border-glow), transparent 60%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
         }
 
         .price-card {
@@ -166,7 +186,6 @@
         .glow-up { animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards, glowGreenPulse 1.2s ease-out; }
         .glow-down { animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards, glowRedPulse 1.2s ease-out; }
 
-        /* استانداردسازی هدر و دکمه تغییر تم مخصوص تاچ موبایل */
         .theme-toggle-pill {
             position: relative;
             display: flex;
@@ -188,7 +207,7 @@
             background: #0088cc;
             border-radius: 99px;
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3.5);
+            box-shadow: 0 4px 12px rgba(0, 136, 204, 0.35);
             z-index: 1;
         }
         body.light-mode .theme-toggle-pill .slider {
@@ -232,7 +251,7 @@
             border-radius: 35px;
             padding: 10px;
             border: 1px solid var(--card-border);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
             z-index: 100;
         }
 
@@ -289,11 +308,17 @@
             
             <div class="flex justify-between items-center gap-3 px-0.5">
                 <div class="flex-1 min-w-0">
-                    <div id="live-time" class="text-3xl font-[900] tracking-tighter">00:00</div>
-                    <div class="text-[11px] opacity-60 font-medium mt-1 flex flex-wrap items-center gap-1" id="date-container">
-                        <span id="live-date-fa" class="font-bold whitespace-nowrap">--</span>
-                        <span class="opacity-30">|</span>
-                        <span id="live-date-en" class="opacity-80 text-[10px] tracking-wide uppercase font-sans whitespace-nowrap">--</span>
+                    <div class="flex items-center gap-2">
+                        <div id="live-time" class="text-3xl font-[900] tracking-tighter">00:00</div>
+                        <span class="flex h-2.5 w-2.5 relative mt-1.5">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                        </span>
+                    </div>
+                    <div class="text-[11px] opacity-60 font-medium mt-1 flex items-center gap-1.5 whitespace-nowrap overflow-visible" id="date-container">
+                        <span id="live-date-fa" class="font-bold flex-shrink-0">--</span>
+                        <span class="opacity-30 flex-shrink-0">|</span>
+                        <span id="live-date-en" class="opacity-80 text-[10px] tracking-tight uppercase font-sans flex-shrink-0">--</span>
                     </div>
                 </div>
                 
@@ -318,7 +343,7 @@
             </div>
         </header>
 
-        <div id="price-list" class="grid grid-cols-2 gap-3 pb-44"></div>
+        <div id="price-list" class="grid grid-cols-2 gap-3 pb-32"></div>
 
         <div class="nav-dock" id="bottom-nav">
             <div id="currency-switcher" class="flex bg-[var(--switcher-bg)] rounded-[25px] p-1 mb-2 border border-[var(--card-border)] hidden" dir="ltr">
@@ -361,10 +386,12 @@
             ]
         };
 
+        // اسکلتون لودینگ داینامیک بر اساس تعداد آیتم‌های هر تب
         function renderSkeleton() {
             const list = document.getElementById('price-list');
             list.innerHTML = '';
-            for (let i = 0; i < 4; i++) {
+            const count = data[currentTab].length;
+            for (let i = 0; i < count; i++) {
                 const skel = document.createElement('div');
                 skel.className = 'skeleton-card space-y-3';
                 skel.innerHTML = `
@@ -419,12 +446,14 @@
                 let glowClass = 'glow-up';
                 let strokeColor = '#22c55e';
                 let gradId = 'url(#grad-green)';
+                let arrow = '▲ ';
                 
-                if (isNeg) { glowClass = 'glow-down'; strokeColor = '#ef4444'; gradId = 'url(#grad-red)'; }
-                if (isZero) { glowClass = 'animate-card'; strokeColor = '#94a3b8'; gradId = 'url(#grad-gray)'; }
+                if (isNeg) { glowClass = 'glow-down'; strokeColor = '#ef4444'; gradId = 'url(#grad-red)'; arrow = '▼ '; }
+                if (isZero) { glowClass = 'animate-card'; strokeColor = '#94a3b8'; gradId = 'url(#grad-gray)'; arrow = '• '; }
 
                 card.className = `price-card ${glowClass}`;
-                card.style.animationDelay = `${index * 0.03}s`;
+                // انیمیشن پله‌پله کارت‌ها به هنگام سوییچ تب
+                card.style.animationDelay = `${index * 0.04}s`;
 
                 let displayPrice = item.price;
                 let unit = item.isUsd ? 'USD' : 'تومان';
@@ -437,11 +466,11 @@
                 let visualElement = '';
                 if (currentTab === 'gold') {
                     if (item.symbol === 'G18' || item.symbol === 'G24') {
-                        visualElement = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2.5" class="opacity-95"><path d="M6 3h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM8 6h8M8 10h8M8 14h8M8 18h8"/></svg>`;
+                        visualElement = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold-icon)" stroke-width="2.5" class="opacity-95"><path d="M6 3h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM8 6h8M8 10h8M8 14h8M8 18h8"/></svg>`;
                     } else if (item.symbol === 'SEKEE') {
-                        visualElement = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2.5" class="opacity-95"><circle cx="12" cy="12" r="9"/><path d="M12 15s-1.5-1.5-1.5-3.5S12 8 12 8s1.5 1.5 1.5 3.5S12 15 12 15zm-2 0l-2 2M14 15l2 2"/></svg>`;
+                        visualElement = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold-icon)" stroke-width="2.5" class="opacity-95"><circle cx="12" cy="12" r="9"/><path d="M12 15s-1.5-1.5-1.5-3.5S12 8 12 8s1.5 1.5 1.5 3.5S12 15 12 15zm-2 0l-2 2M14 15l2 2"/></svg>`;
                     } else {
-                        visualElement = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2.5" class="opacity-95"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="6"/><path d="M12 9v6M9 12h6M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>`;
+                        visualElement = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold-icon)" stroke-width="2.5" class="opacity-95"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="6"/><path d="M12 9v6M9 12h6M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>`;
                     }
                 } else {
                     visualElement = `<img src="${item.img}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100'">`;
@@ -474,7 +503,7 @@
                             <span class="text-[9px] opacity-40 font-normal whitespace-nowrap">${unit}</span>
                         </div>
                         <div class="text-[10px] font-black text-right w-full mt-0.5 ${isZero ? 'text-slate-400' : (isNeg ? 'text-red-500' : 'text-green-600')}">
-                            ${item.change}
+                            <span>${arrow}</span>${item.change.replace(/[+-]/, '')}
                         </div>
                     </div>
                     
@@ -526,8 +555,8 @@
             
             setTimeout(() => {
                 renderSkeleton();
-                setTimeout(render, 250); 
-            }, 120);
+                setTimeout(render, 150); 
+            }, 100);
         }
 
         function setCurrency(curr) {
